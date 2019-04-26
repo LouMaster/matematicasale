@@ -4,27 +4,23 @@ let startButton2 	= document.getElementById("start2");
 let startButton3 	= document.getElementById("start3");
 let startButton4 	= document.getElementById("start4");
 let inputField 		= document.getElementById("in");
-let form 			= document.querySelector("form");
-let p			 	= document.getElementById("p");
-let q 				= document.getElementById("q");
-let op 				= document.getElementById("op");
+let form 		    = document.querySelector("form");
+let p		 	    = document.getElementById("p");
+let q 			    = document.getElementById("q");
+let op 			    = document.getElementById("op");
 let response 		= document.getElementById("response"); // used for Try Again text
 let results 		= document.getElementById("results");
 let category 		= document.getElementById("category");
-let timer 			= document.getElementById("timer");
+let timer 		    = document.getElementById("timer");
 
 /***** STATE letIABLES *****/
-let max = 20;
-let num1;
-let num2;
-let answer;
-let type = 1;
+let max = 20, num1, num2, answer, type = 1,
 
-let correctAnswers = 0;
+correctAnswers = 0,
 
-let startTime;
-let endTime;
-let timerInt;
+startTime,
+endTime,
+timerInt;
 
 
 let timerLeft = 8000;
@@ -36,96 +32,71 @@ let times = [];
 inputField.className = "hide";
 
 /***** EVENTS *****/
-startButton.onclick = function() {
+startButton.onclick = () => {
 	// initializing the count
 	count = 0;
-	times = [];
 	timerLeft = 8000;
-	results.innerHTML = ""; // clear results
-	category.innerHTML = ""; // clear category
-	refreshNums();
-	inputField.className = ""; // show the input field
-	startButton.className = "hide"; // hide the start button
-	startButton2.className = "hide"; // hide the start button
-	startButton3.className = "hide"; // hide the start button
-	startButton4.className = "hide"; // hide the start button
-	inputField.focus();
+	resetEverything();
 };
 
-startButton2.onclick = function() {
+startButton2.onclick = () => {
 	// initializing the count
 	count = 0;
 	type = 2;
 	max = 100;
-	times = [];
 	timerLeft = 10000;
-	results.innerHTML = ""; // clear results
-	category.innerHTML = ""; // clear category
-	refreshNums();
-	inputField.className = ""; // show the input field
-	startButton.className = "hide"; // hide the start button
-	startButton2.className = "hide"; // hide the start button
-	startButton3.className = "hide"; // hide the start button
-	startButton4.className = "hide"; // hide the start button
-	inputField.focus();
+	resetEverything();
 };
 
-startButton3.onclick = function() {
+startButton3.onclick = () => {
 	// initializing the count
 	count = 0;
 	type = 3;
-	max = 10;
-	timerLeft = 12000;
-	times = [];
-	results.innerHTML = ""; // clear results
-	category.innerHTML = ""; // clear category
-	refreshNums();
-	inputField.className = ""; // show the input field
-	startButton.className = "hide"; // hide the start button
-	startButton2.className = "hide"; // hide the start button
-	startButton3.className = "hide"; // hide the start button
-	startButton4.className = "hide"; // hide the start button
-	inputField.focus();
+    max = 10;
+    timerLeft = 12000;
+	resetEverything();
 };
 
-startButton4.onclick = function() {
+startButton4.onclick = () => {
 	// initializing the count
 	count = 0;
 	type = 2;
-	max = 1000;
-	times = [];
-	timerLeft = 12000;
-	results.innerHTML = ""; // clear results
-	category.innerHTML = ""; // clear category
-	refreshNums();
-	inputField.className = ""; // show the input field
-	startButton.className = "hide"; // hide the start button
-	startButton2.className = "hide"; // hide the start button
-	startButton3.className = "hide"; // hide the start button
-	startButton4.className = "hide"; // hide the start button
-	inputField.focus();
+    max = 1000;
+    timerLeft = 12000;
+	resetEverything();
 };
 
-form.onsubmit = function(e) {
+form.onsubmit = (e) => {
 	// need to prevent the default form submission wich reloads the page
 	e.preventDefault();
 	getAnswer();
 };
 
-function stopButton() {
+resetEverything = () => {
+    times = [];
+	results.innerHTML = ""; // clear results
+	category.innerHTML = ""; // clear category
+	refreshNums();
+	inputField.className = ""; // show the input field
+	startButton.className = "hide"; // hide the start button
+	startButton2.className = "hide"; // hide the start button
+	startButton3.className = "hide"; // hide the start button
+	startButton4.className = "hide"; // hide the start button
+	inputField.focus();
+}
+
+stopButton = () => {
 	let resultString;
 	let categoryString;
 	if (times.length > 0) {
 		// getting mean time
 		let total = 0;
-		for (let i = 0; i < times.length; i++) {
-			total += times[i];
-		}
+		for (let i = 0; i < times.length; i++) total += times[i];
 		let mean = (total / times.length) / 1000;
-		resultString = "Tempo médio por questão: " + mean.toPrecision(4) + " sec <br> Respostas certas: "+correctAnswers;
+		resultString = "Average seconds per question: " + mean.toPrecision(4) + " sec <br> Correct answers: "+correctAnswers;
 		categoryString = getCategory(mean);
 	} else {
-		resultString = "Calma que?";
+		resultString = "Really?";
 		categoryString = "";
 	}
 
@@ -150,7 +121,7 @@ function stopButton() {
 };
 
 /***** FUNCTIONS ******/
-let refreshNums = function() {
+let refreshNums = () => {
 	// Getting some random numbers
 	num1 = Math.floor((Math.random() * max) + 1);
 	num2 = Math.floor((Math.random() * max) + 1);
@@ -170,15 +141,11 @@ let refreshNums = function() {
 	timer.style.color = "green";
 	clearInterval(timerInt);
 
-	timerInt = setInterval(function(){
+	timerInt = setInterval(() => {
 		timerLeft -= 5;
 		timer.innerHTML = timerLeft+"s";
-		if(timerLeft == 4000){
-			timer.style.color = "yellow";
-		}
-		if(timerLeft == 2000){
-			timer.style.color = "red";
-		}
+		if(timerLeft == 4000) timer.style.color = "yellow";
+		if(timerLeft == 2000) timer.style.color = "red";
 		if(timerLeft == 0){
 			stopButton();
 			clearInterval(timerInt);
@@ -194,59 +161,47 @@ let refreshNums = function() {
 /*
 * This is called in the onsubmit event
 */
-let getAnswer = function() {
+let getAnswer = () => {
 	let correct = 0;
-	if(type === 1){
-		correct = num1 + num2;
-	}else if(type === 2){
-		correct = num1 - num2;
-	} else {
-		correct = num1 * num2;
-	}
+	if(type === 1) correct = num1 + num2;
+	else if(type === 2) correct = num1 - num2;
+    else correct = num1 * num2;
+    
 	// Getting the users attempt
 	answer = parseInt(inputField.value);
 
 	if (answer === correct) {
 		// Stopping the timer and adding the time to the times array
 		correctAnswers += 1;
-		console.log(correctAnswers);
 		endTime = new Date();
 		times[count++] = endTime.getTime() - startTime.getTime();
 		// the answer was correct, so no need for "Try Again"
 		response.innerHTML = "";
 		refreshNums();
-	} else {
-		stopButton();
-	}
+	} else stopButton();
 	// clear the input field for the next round
 	inputField.value = "";
 };
 
-let getCategory = function(mean) {
+let getCategory = (mean) => {
 	let total = correctAnswers / mean;
 
 	if(max > 500){
-		if(correctAnswers == 1){
-			return "Você é um deus."
-		} else {
-			return "Calculadora não vale."
-		}
+		if(correctAnswers == 1) return "You are a god."
+		else return "You can't use a calculator..."
 	}
 
-	if(correctAnswers < 5){
-		return "Menos de 5, sério?"
-	}
-	if (total < 1) {
-		return "Se for pra demorar assim nem tenta cara.";
-	} else if (total < 2) {
-		return "Aí não da nê.";
-	} else if (total < 3) {
-		return "Aceitável...";
-	} else if (total < 4) {
-		return "Hum... Eu daria nota 8";
-	} else if (total < 6) {
-		return "Você é bom.";
-	} else {
-		return "Quase um robô...";
-	}
+	if(correctAnswers < 5) return "Less than five, really?"
+	if (total < 1) return "If you are going to take this long why bother trying?";
+	else if (total < 2) 
+		return "C'mom man";
+	else if (total < 3) 
+		return "Not bad...";
+	else if (total < 4) 
+		return "To be honest I was expecting less from you.";
+	else if (total < 6) 
+		return "You are actually good";
+	else 
+		return "Jeezy, slow down bro";
+	
 };
