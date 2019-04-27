@@ -35,6 +35,8 @@ inputField.className = "hide";
 startButton.onclick = () => {
 	// initializing the count
 	count = 0;
+	max = 20;
+	type = 1;
 	timerLeft = 8000;
 	resetEverything();
 };
@@ -52,8 +54,8 @@ startButton3.onclick = () => {
 	// initializing the count
 	count = 0;
 	type = 3;
-    max = 10;
-    timerLeft = 12000;
+    	max = 10;
+    	timerLeft = 12000;
 	resetEverything();
 };
 
@@ -61,8 +63,8 @@ startButton4.onclick = () => {
 	// initializing the count
 	count = 0;
 	type = 2;
-    max = 1000;
-    timerLeft = 12000;
+    	max = 1000;
+    	timerLeft = 12000;
 	resetEverything();
 };
 
@@ -82,6 +84,7 @@ resetEverything = () => {
 	startButton2.className = "hide"; // hide the start button
 	startButton3.className = "hide"; // hide the start button
 	startButton4.className = "hide"; // hide the start button
+	inputField.value = "";
 	inputField.focus();
 }
 
